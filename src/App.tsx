@@ -1,13 +1,9 @@
-import { useState } from "react";
 import Book from "./components/Book";
 import Film from "./components/Film";
+import FoldableTitle from "./components/FoldableTitle";
 import Music from "./components/Music";
 
 function App() {
-  const [isFilmsOpen, setIsFilmsOpen] = useState(true);
-  const [isBooksOpen, setIsBooksOpen] = useState(true);
-  const [isMusicOpen, setIsMusicOpen] = useState(true);
-
   const films = [
     { src: "/The_Matrix.png", title: "The Matrix", year: 1999, rating: 8.8 },
     { src: "/avatar_3.jpg", title: "Avatar 3", year: 2025, rating: 9.1 },
@@ -76,114 +72,9 @@ function App() {
         id="films"
         className="d-flex justify-content-center flex-column align-items-center"
       >
-        <h1 className="my-3">
-          Filmy
-          {isFilmsOpen ? (
-            <span role="button" onClick={() => setIsFilmsOpen(!isFilmsOpen)}>
-              ⏷
-            </span>
-          ) : (
-            <span role="button" onClick={() => setIsFilmsOpen(!isFilmsOpen)}>
-              ⏵
-            </span>
-          )}
-        </h1>
-        {isFilmsOpen && (
+        <FoldableTitle title="Filmy">
           <div className="d-flex justify-content-evenly w-100 row">
-            {films.map((film): any => {
-              return (
-                <Film
-                  key={film.src}
-                  src={film.src}
-                  title={film.title}
-                  year={film.year}
-                  rating={film.rating}
-                />
-              );
-            })}
-          </div>
-        )}
-      </section>
-
-      <section
-        id="books"
-        className="d-flex justify-content-center flex-column align-items-center"
-      >
-        <h1 className="my-3">
-          Książki
-          {isBooksOpen ? (
-            <span role="button" onClick={() => setIsBooksOpen(!isBooksOpen)}>
-              ⏷
-            </span>
-          ) : (
-            <span role="button" onClick={() => setIsBooksOpen(!isBooksOpen)}>
-              ⏵
-            </span>
-          )}
-        </h1>
-        {isBooksOpen && (
-          <div className="d-flex justify-content-evenly w-100 row">
-            {books.map((book): any => {
-              return (
-                <Book
-                  key={book.src}
-                  src={book.src}
-                  title={book.title}
-                  year={book.year}
-                  pages={book.pages}
-                />
-              );
-            })}
-          </div>
-        )}
-      </section>
-
-      <section
-        id="music"
-        className="d-flex justify-content-center flex-column align-items-center"
-      >
-        <h1 className="my-3">
-          Muzyka
-          {isMusicOpen ? (
-            <span role="button" onClick={() => setIsMusicOpen(!isMusicOpen)}>
-              ⏷
-            </span>
-          ) : (
-            <span role="button" onClick={() => setIsMusicOpen(!isMusicOpen)}>
-              ⏵
-            </span>
-          )}
-        </h1>
-        {isMusicOpen && (
-          <div className="d-flex justify-content-evenly w-100 row">
-            {albums.map((album): any => {
-              return (
-                <Music
-                  key={album.cover}
-                  cover={album.cover}
-                  title={album.title}
-                  band={album.band}
-                  genre={album.genre}
-                  year={album.year}
-                  songs={album.songs}
-                />
-              );
-            })}
-          </div>
-        )}
-      </section>
-
-      <hr style={{ border: "1px solid black", width: "100%" }} />
-
-      <section
-        id="other"
-        className="d-flex justify-content-center flex-column align-items-center"
-      >
-        <h1 className="my-3">Filmy wydane po 2010r.</h1>
-        <div className="d-flex justify-content-evenly w-100 row">
-          {films
-            .filter((film) => film.year > 2010)
-            .map((film) => (
+            {films.map((film) => (
               <Film
                 key={film.src}
                 src={film.src}
@@ -192,36 +83,102 @@ function App() {
                 rating={film.rating}
               />
             ))}
-        </div>
+          </div>
+        </FoldableTitle>
+      </section>
 
-        <h1 className="my-3">Książki wg roku wydania</h1>
-        <div className="d-flex justify-content-evenly w-100 row">
-          {books
-            .toSorted((a, b) => b.year - a.year)
-            .map((book): any => {
-              return (
-                <Book
-                  key={book.src}
-                  src={book.src}
-                  title={book.title}
-                  year={book.year}
-                  pages={book.pages}
+      <section
+        id="books"
+        className="d-flex justify-content-center flex-column align-items-center"
+      >
+        <FoldableTitle title="Książki">
+          <div className="d-flex justify-content-evenly w-100 row">
+            {books.map((book) => (
+              <Book
+                key={book.src}
+                src={book.src}
+                title={book.title}
+                year={book.year}
+                pages={book.pages}
+              />
+            ))}
+          </div>
+        </FoldableTitle>
+      </section>
+
+      <section
+        id="music"
+        className="d-flex justify-content-center flex-column align-items-center"
+      >
+        <FoldableTitle title="Muzyka">
+          <div className="d-flex justify-content-evenly w-100 row">
+            {albums.map((album) => (
+              <Music
+                key={album.cover}
+                cover={album.cover}
+                title={album.title}
+                band={album.band}
+                genre={album.genre}
+                year={album.year}
+                songs={album.songs}
+              />
+            ))}
+          </div>
+        </FoldableTitle>
+      </section>
+
+      <hr style={{ border: "1px solid black", width: "100%" }} />
+
+      <section
+        id="other"
+        className="d-flex justify-content-center flex-column align-items-center"
+      >
+        <FoldableTitle title="Filmy wydane po 2010r.">
+          <div className="d-flex justify-content-evenly w-100 row">
+            {films
+              .filter((film) => film.year > 2010)
+              .map((film) => (
+                <Film
+                  key={film.src}
+                  src={film.src}
+                  title={film.title}
+                  year={film.year}
+                  rating={film.rating}
                 />
-              );
-            })}
-        </div>
+              ))}
+          </div>
+        </FoldableTitle>
 
-        <h1 className="my-3">Album z największą ilością utworów</h1>
-        <div className="d-flex justify-content-evenly w-100 row">
-          <Music
-            band={mostSongsAlbum!.band}
-            cover={mostSongsAlbum!.cover}
-            genre={mostSongsAlbum!.genre}
-            songs={mostSongsAlbum!.songs}
-            title={mostSongsAlbum!.title}
-            year={mostSongsAlbum!.year}
-          />
-        </div>
+        <FoldableTitle title="Książki wg roku wydania">
+          <div className="d-flex justify-content-evenly w-100 row">
+            {books
+              .toSorted((a, b) => b.year - a.year)
+              .map((book) => {
+                return (
+                  <Book
+                    key={book.src}
+                    src={book.src}
+                    title={book.title}
+                    year={book.year}
+                    pages={book.pages}
+                  />
+                );
+              })}
+          </div>
+        </FoldableTitle>
+
+        <FoldableTitle title="Album z największą ilością utworów">
+          <div className="d-flex justify-content-evenly w-100 row">
+            <Music
+              band={mostSongsAlbum!.band}
+              cover={mostSongsAlbum!.cover}
+              genre={mostSongsAlbum!.genre}
+              songs={mostSongsAlbum!.songs}
+              title={mostSongsAlbum!.title}
+              year={mostSongsAlbum!.year}
+            />
+          </div>
+        </FoldableTitle>
       </section>
     </div>
   );
