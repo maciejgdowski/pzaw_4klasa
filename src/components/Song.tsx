@@ -1,4 +1,3 @@
-
 /**
  * @param name - song name
  * @param duration - song duration in seconds
@@ -13,9 +12,14 @@ function Song({ name, duration }: SongProps) {
   const seconds = String(duration % 60).padStart(2, "0");
 
   return (
-    <li>
-      {name} | {minutes}:{seconds}
-    </li>
+    <>
+      <td>
+        <span className="fw-bold">{name}</span>
+      </td>
+      <td>
+        <span className="float-end">{minutes}:{seconds}</span>
+      </td>
+    </>
   );
 }
 
