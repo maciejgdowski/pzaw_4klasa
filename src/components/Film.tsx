@@ -14,7 +14,7 @@ interface FilmProps {
 function Film({ src, title, year, rating }: FilmProps) {
   console.log(src);
   return (
-    <div className="card col-12 col-md-4 m-2 m-md-0" style={{maxWidth: "18rem"}}>
+    <div className="card col-12 col-md-4 m-2 m-md-0 p-0" style={{maxWidth: "18rem"}}>
       <img className="cad-img-top" src={src} />
       <h3 className="card-title p-2">
         {title} {rating >= 8 && <span className="badge text-bg-danger">Polecany</span>}

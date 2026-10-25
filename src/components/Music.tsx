@@ -19,7 +19,7 @@ interface MusicProps {
 
 function Music({ cover, title, band, genre, year, songs }: MusicProps) {
   return (
-    <div className="card col-12 col-md-4 m-2 m-md-0" style={{ maxWidth: "18rem" }}>
+    <div className="card col-12 col-md-4 m-2 m-md-0 p-0" style={{ maxWidth: "18rem" }}>
       <img src={cover} className="card-img" />
       <h3 className="card-title mx-2 text-center">{title}</h3>
       <div className="card-body">
