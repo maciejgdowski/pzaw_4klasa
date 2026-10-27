@@ -17,7 +17,12 @@ interface MusicProps {
   songs?: SongProps[];
 }
 
+
+
 function Music({ cover, title, band, genre, year, songs }: MusicProps) {
+  function handleSongClick(songTitle: string) {
+    console.log(`Wybrano utwór: ${songTitle} z ${title}`)
+  }
   return (
     <div className="card col-12 col-md-4 m-2 m-md-0 p-0" style={{ maxWidth: "18rem" }}>
       <img src={cover} className="card-img" />
@@ -29,24 +34,24 @@ function Music({ cover, title, band, genre, year, songs }: MusicProps) {
         </h5>
       </div>
       {songs ? (
-          <table className="table table-striped table-hover">
-            <thead>
-              <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Duration</th>
+        <table className="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Duration</th>
+            </tr>
+          </thead>
+          <tbody>
+            {songs.map((song) => (
+              <tr key={song.name} onClick={() => handleSongClick(song.name)}>
+                <Song duration={song.duration} name={song.name} />
               </tr>
-            </thead>
-            <tbody>
-              {songs.map((song) => (
-                <tr key={song.name}>
-                  <Song duration={song.duration} name={song.name} />
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <span className="alert alert-danger">Brak utworów</span>
-        )}
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <span className="alert alert-danger">Brak utworów</span>
+      )}
     </div>
   );
 }

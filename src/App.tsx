@@ -1,9 +1,27 @@
+import { useEffect, useState } from "react";
 import Book from "./components/Book";
 import Film from "./components/Film";
 import FoldableTitle from "./components/FoldableTitle";
 import Music from "./components/Music";
 
 function App() {
+
+  const [filmSearch, setFilmSearch] = useState("");
+  const [bookSearch, setBookSearch] = useState("");
+  const [albumSearch, setAlbumSearch] = useState("");
+
+
+  useEffect(() => {
+    console.log(`movie search: ${filmSearch}`);
+  }, [filmSearch])
+
+  useEffect(() => {
+    console.log(`book search: ${bookSearch}`);
+  }, [bookSearch])
+  useEffect(() => {
+    console.log(`album search: ${albumSearch}`);
+  }, [albumSearch])
+
   const films = [
     { src: "/The_Matrix.png", title: "The Matrix", year: 1999, rating: 8.8 },
     { src: "/avatar_3.jpg", title: "Avatar 3", year: 2025, rating: 9.1 },
@@ -59,13 +77,14 @@ function App() {
     },
   ];
 
-  films.sort((a, b) => a.title.localeCompare(b.title));
+  films.sort((a, b) => a!.title.localeCompare(b!.title));
   books.sort((a, b) => a.title.localeCompare(b.title));
   albums.sort((a, b) => a.title.localeCompare(b.title));
   const mostSongsAlbum = albums
     .sort((a, b) => (b.songs?.length ?? 0) - (a.songs?.length ?? 0))
     .at(0);
-  console.log("most songs album: ", mostSongsAlbum);
+
+
   return (
     <div className="container">
       <section
@@ -73,6 +92,18 @@ function App() {
         className="d-flex justify-content-center flex-column align-items-center"
       >
         <FoldableTitle title="Filmy">
+          <div className="mb-4 d-flex flex-column  align-items-center justify-content-around gap-2">
+            <form action="" onSubmit={(e) => e.preventDefault()}>
+              <input
+                id="movie-search"
+                type="text"
+                className="form-control"
+                placeholder="Wpisz tytuł"
+                onChange={(e) => setFilmSearch(e.target.value)}
+              />
+            </form>
+            {filmSearch && <h4 className="p-0 m-0">Szukasz: {filmSearch}</h4>}
+          </div>
           <div className="d-flex justify-content-evenly w-100 row">
             {films.map((film) => (
               <Film
@@ -91,7 +122,20 @@ function App() {
         id="books"
         className="d-flex justify-content-center flex-column align-items-center"
       >
+
         <FoldableTitle title="Książki">
+          <div className="mb-4 d-flex flex-column  align-items-center justify-content-around gap-2">
+            <form action="" onSubmit={(e) => e.preventDefault()}>
+              <input
+                id="book-search"
+                type="text"
+                className="form-control"
+                placeholder="Wpisz tytuł"
+                onChange={(e) => setBookSearch(e.target.value)}
+              />
+            </form>
+            {bookSearch && <h4 className="p-0 m-0">Szukasz: {bookSearch}</h4>}
+          </div>
           <div className="d-flex justify-content-evenly w-100 row">
             {books.map((book) => (
               <Book
@@ -111,6 +155,18 @@ function App() {
         className="d-flex justify-content-center flex-column align-items-center"
       >
         <FoldableTitle title="Muzyka">
+          <div className="mb-4 d-flex flex-column  align-items-center justify-content-around gap-2">
+            <form action="" onSubmit={(e) => e.preventDefault()}>
+              <input
+                id="album-search"
+                type="text"
+                className="form-control"
+                placeholder="Wpisz tytuł"
+                onChange={(e) => setAlbumSearch(e.target.value)}
+              />
+            </form>
+            {albumSearch && <h4 className="p-0 m-0">Szukasz: {albumSearch}</h4>}
+          </div>
           <div className="d-flex justify-content-evenly w-100 row">
             {albums.map((album) => (
               <Music
