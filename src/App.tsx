@@ -13,14 +13,14 @@ function App() {
 
   useEffect(() => {
     console.log(`movie search: ${filmSearch}`);
-  }, [filmSearch])
+  }, [filmSearch]);
 
   useEffect(() => {
     console.log(`book search: ${bookSearch}`);
-  }, [bookSearch])
+  }, [bookSearch]);
   useEffect(() => {
     console.log(`album search: ${albumSearch}`);
-  }, [albumSearch])
+  }, [albumSearch]);
 
   const films = [
     { src: "/The_Matrix.png", title: "The Matrix", year: 1999, rating: 8.8 },
@@ -83,7 +83,9 @@ function App() {
   const mostSongsAlbum = albums
     .sort((a, b) => (b.songs?.length ?? 0) - (a.songs?.length ?? 0))
     .at(0);
-
+  const filteredFilms = films.filter((film) =>
+    film.title.toLowerCase().includes(filmSearch.trim().toLowerCase()),
+  );
 
   return (
     <div className="container">
@@ -105,31 +107,19 @@ function App() {
             {filmSearch && <h4 className="p-0 m-0">Szukasz: {filmSearch}</h4>}
           </div>
           <div className="d-flex justify-content-evenly w-100 row">
-            {films.map((film) => {
-              if (filmSearch.trim().length > 0) {
-                if (film.title.toLowerCase().includes(filmSearch)) {
-                  return (<Film
-                    key={film.src}
-                    src={film.src}
-                    title={film.title}
-                    year={film.year}
-                    rating={film.rating}
-                  />)
-                } else {
-                  return <h2>Nie znaleziono wyników</h2>
-                }
-              } else {
-                return (
-                  <Film
-                    key={film.src}
-                    src={film.src}
-                    title={film.title}
-                    year={film.year}
-                    rating={film.rating}
-                  />
-                )
-              }
-            })}
+            {filmSearch.trim().length > 0 && filteredFilms.length === 0 ? (
+              <h2>Nie znaleziono wyników</h2>
+            ) : (
+              filteredFilms.map((film) => (
+                <Film
+                  key={film.src}
+                  src={film.src}
+                  title={film.title}
+                  year={film.year}
+                  rating={film.rating}
+                />
+              ))
+            )}
           </div>
         </FoldableTitle>
       </section>
