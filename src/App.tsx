@@ -105,15 +105,31 @@ function App() {
             {filmSearch && <h4 className="p-0 m-0">Szukasz: {filmSearch}</h4>}
           </div>
           <div className="d-flex justify-content-evenly w-100 row">
-            {films.map((film) => (
-              <Film
-                key={film.src}
-                src={film.src}
-                title={film.title}
-                year={film.year}
-                rating={film.rating}
-              />
-            ))}
+            {films.map((film) => {
+              if (filmSearch.trim().length > 0) {
+                if (film.title.toLowerCase().includes(filmSearch)) {
+                  return (<Film
+                    key={film.src}
+                    src={film.src}
+                    title={film.title}
+                    year={film.year}
+                    rating={film.rating}
+                  />)
+                } else {
+                  return <h2>Nie znaleziono wyników</h2>
+                }
+              } else {
+                return (
+                  <Film
+                    key={film.src}
+                    src={film.src}
+                    title={film.title}
+                    year={film.year}
+                    rating={film.rating}
+                  />
+                )
+              }
+            })}
           </div>
         </FoldableTitle>
       </section>
